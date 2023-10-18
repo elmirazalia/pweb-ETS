@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ETS Pemrogramman Web 2023</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body class="">
+    <div class="container">
+        <h1>ETS Pemrograman Web 2023</h1>
+        <div id="data-container">
+            <!-- Data akan ditampilkan di sini -->
+        </div>
+    </div>
+
+    <!-- Memuat jQuery dan Bootstrap JS dari CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Fungsi untuk mengambil data dari API JSON
+        function getDataFromAPI() {
+            // Ganti URL dengan URL API yang sesuai
+            const apiUrl = 'https://it-its.id/api/books';
+
+            // Menggunakan Fetch API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Memproses data dan menampilkannya
+                    displayData(data);
+                })
+                .catch(error => console.error('Terjadi kesalahan: ' + error));
+        }
+
+        // Fungsi untuk menampilkan data ke dalam kontainer
+        function displayData(data) {
+            const dataContainer = document.getElementById('data-container');
+            dataContainer.innerHTML = ''; // Membersihkan kontainer sebelum menambahkan data baru
+
+            // Loop melalui data dari API dan tambahkan ke kontainer
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${item.title}</h5>
+                        <p class="card-text">${item.description}</p>
+                    </div>
+                `;
+                dataContainer.appendChild(card);
+            });
+        }
+
+        // Memanggil fungsi getDataFromAPI saat halaman dimuat
+        getDataFromAPI();
+    </script>
+</body>
+</html>
